@@ -1,4 +1,4 @@
-# QUELQUES EXPLICATIONS SUR LES DIFFERENTS DOSSIERS LARAVEL
+# Quelques explications sur l'architecture Larael
 
 ## app
 
@@ -99,39 +99,46 @@ PHPUnit est un outil qui permet de lancer les tests unitaires et fonctionnels. C
 ## server.php
 
 Le fichier server.php est uniquement présent pour que la commande php artisan serve fonctionne. Vous ne devriez jamais avoir à y toucher.
+# ----------------------------------------------------------
 
-# ---------------------------------------REALISATION DU CREU SINGLE PAGE----------------------------------------
+# REALISATION DU CRUD SINGLE PAGE
 
-# STEP 1) INSTALLATION LARAVEL
+![Screenshot app](/screenshot1.png)
+![Screenshot app](/screenshot2.png)
+
+## STEP 1) INSTALLATION LARAVEL
 
 ## Installation de Laravel avec Composer
-
-\$ composer create-project --prefer-dist laravel/laravel project-name
+```
+$ composer create-project --prefer-dist laravel/laravel project-name
+```
 
 # STEP 2) INSTALATION VUE DEPENDENCY ET EDITAGE DES CONFIGURATIONS
 
 ## Installation de Vue
-
-\$ npm install vue
+```
+$ npm install vue
+```
 
 ## Installation de vue-router et de vue-axios
 
 ### Par défaut Vue.js n'est pas équipé pour gérer des requêtes HTTP alors, il faut installer ces deux packages.
-
-\$ npm install vue-router vue-axios --saved
-
+```
+$ npm install vue-router vue-axios --saved
+```
 ### Attention, si utilisation de Bottstrap, il est nécessaire de faire les commandes suivantes :
-
-\$ composer require laravel/ui --dev
-
+```
+$ composer require laravel/ui --dev
+```
 \$ php artisan ui boostrap
 
 ## Installation des packages ajoutés au package.json
-
-\$ npm install
+```
+$ npm install
+```
 
 ### Ensuite, il faut déclarer ces nouveaux composants (, bootstrap, vue, vue-router et vue-axios) dans notre fichier ressources/assets/js/app.js
-
+```
     require('./bootstrap');
 
     window.Vue = require('vue');                // To load Vue and import Vue in all Laravel before the plugins
@@ -142,10 +149,13 @@ Le fichier server.php est uniquement présent pour que la commande php artisan s
     import VueAxios from 'vue-axios';           // import VueAxios from package vue-axios
     import axios from 'axios';                  // importe axios from package axios
     Vue.use(VueAxios, axios);                   // tell Vue to use VueAxios and axios
+   ```
 
 ### Installation d'un component exemple, également dans le fichier app.js
 
+```
     Vue.component('example-component', require('./components/ExampleComponent.vue'));
+```
 
     // Ci-dessus, création d'un component exemple (intérêt est de montrer ou se situe la configuration des components) dont le nom est example-component avant de directement l'importer dans le dossier components. PascalCase : example-component sera référencé ExampleComponent.
 
@@ -169,7 +179,7 @@ Le fichier server.php est uniquement présent pour que la commande php artisan s
 
 // C'est ici qu'on va retrouver l'id "app" dans lequel va être pusher le exampleComponent.vue.
 Post.blade.php est en quelque sorte notre page index.
-
+```
     // post.blade.php
 
     <!doctype html>
@@ -189,7 +199,7 @@ Post.blade.php est en quelque sorte notre page index.
             <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>
         </body>
     </html>
-
+```
 ## Change the route inside route/web.php / Ce que le client voit suite requête URL
 
 Tout d'abbord, quand on parle de routing, il est essentiel de connaître les principales méthodes HTTP :
@@ -307,7 +317,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
     }
     ];
 
-### Créez l'instance du routeur et passez l'option `routes` avant de la passer à notre application Vue
+### Créez l'instance du routeur et passez l'option routes avant de la passer à notre application Vue
 
 // Vous pouvez également passer des options supplémentaires, comme 'history' vu précédemment.
 
@@ -315,7 +325,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 
 ### Créer et monter l'instance de Vue sur id "app" avec les propriétés du router.
 
-// Soyez sûr d'injecter le routeur avec l'option `router` pour
+// Soyez sûr d'injecter le routeur avec l'option router pour
 // permettre à l'application tout entière d'être à l'écoute du routeur.
 // le "App" appelle le router sur App.vue !!! App.vue redirigera ensuite vers home / create / ,...
 
@@ -646,5 +656,3 @@ Les routes API permettent, lorsque l'utilisateur clique sur un évenement save, 
     Route::get('/posts', 'PostController@index');
 
     // Avant le router, la requête passe par le middleware... si l'utilisateur remplit le syst§me d'authentification, alors il a accès aux controllers.
-
-# STEP 10)
